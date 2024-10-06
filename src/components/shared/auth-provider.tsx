@@ -41,8 +41,6 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     return { isAuthenticated, user };
   }, [isAuthenticated, user]);
 
-  console.log(contextValue);
-
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };
 

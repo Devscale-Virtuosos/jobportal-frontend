@@ -16,10 +16,7 @@ export default function RegisterPage() {
     const error = Boolean(searchParams.get('error'));
     const message = searchParams.get('message');
 
-    console.log({ error, message });
-
     if (error) {
-      console.log('MASUK SINI');
       toast({
         title: 'Login failed!',
         description: message,
@@ -42,12 +39,12 @@ export default function RegisterPage() {
           <CardDescription>Choose your role!</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <form action="http://localhost:8080/api/v1/auth/register/recruiter" method="POST">
+          <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/register/recruiter`} method="POST">
             <Button type="submit" className="bg-primary-500 hover:bg-primary-400 w-full">
               Register as Recruiter
             </Button>
           </form>
-          <form action="http://localhost:8080/api/v1/auth/register/job_hunter" method="POST">
+          <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/register/job_hunter`} method="POST">
             <Button type="submit" className="bg-primary-500 hover:bg-primary-400 w-full">
               Register as Job Hunter
             </Button>
