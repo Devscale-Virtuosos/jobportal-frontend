@@ -32,7 +32,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto mt-16 w-2/6">
+    <div className="mx-auto mt-16 h-[60vh] w-2/6">
       <Card>
         <CardHeader>
           <CardTitle>Register</CardTitle>
@@ -40,12 +40,12 @@ export default function RegisterPage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/register/recruiter`} method="POST">
-            <Button type="submit" className="bg-primary-500 hover:bg-primary-400 w-full">
+            <Button type="submit" className="w-full bg-primary-500 hover:bg-primary-400">
               Register as Recruiter
             </Button>
           </form>
           <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/register/job_hunter`} method="POST">
-            <Button type="submit" className="bg-primary-500 hover:bg-primary-400 w-full">
+            <Button type="submit" className="w-full bg-primary-500 hover:bg-primary-400">
               Register as Job Hunter
             </Button>
           </form>
@@ -53,7 +53,7 @@ export default function RegisterPage() {
         <CardFooter>
           <p className="text-sm">
             Already have an account?{' '}
-            <Link to="/login" className="text-secondary-500 font-bold">
+            <Link to="/login" className="font-bold text-secondary-500">
               Login
             </Link>
           </p>

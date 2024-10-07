@@ -29,14 +29,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto mt-16 w-2/6">
+    <div className="mx-auto mt-16 h-[60vh] w-2/6">
       <Card>
         <CardHeader>
           <CardTitle>Login</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/login`} method="POST">
-            <Button type="submit" className="bg-primary-500 hover:bg-primary-400 w-full">
+            <Button type="submit" className="w-full bg-primary-500 hover:bg-primary-400">
               Login with Google
             </Button>
           </form>
@@ -44,7 +44,7 @@ export default function LoginPage() {
         <CardFooter>
           <p className="text-sm">
             Don't have an account yet?{' '}
-            <Link to="/register" className="text-secondary-500 font-bold">
+            <Link to="/register" className="font-bold text-secondary-500">
               Register
             </Link>
           </p>
