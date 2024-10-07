@@ -1,6 +1,5 @@
 import Container from '@/components/shared/container';
 import vacancyImage from '../../../../assets/home/vacancy/vacancy.png';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 export default function Vacancy() {
