@@ -8,7 +8,7 @@ import HomePage from '@/features/home';
 import LoginPage from '@/features/authentication/login';
 import RegisterPage from '@/features/authentication/register';
 import DashboardPage from '@/features/dashboard';
-import JobVacancyPage from '@/features/job-vacancy';
+import JobVacancyPage from '@/features/job-vacancy/job-list';
 import AboutPage from '@/features/about';
 import ContactPage from '@/features/contact';
 import DashboardRecruiterCampany from '@/features/dashboard-recruiter-company';
@@ -19,6 +19,7 @@ import JobHunterJobListPage from '@/features/dashboard-jobhunter-jobs/jobhunter-
 import JobHunterJobDetailsPage from '@/features/dashboard-jobhunter-jobs/jobhunter-job-details';
 import RecruiterCreateJobPage from '@/features/dashboard-recruiter-jobs/recruiter-create-job';
 import NotFoundPage from '@/features/not-found';
+import JobDetailPage from '@/features/job-vacancy/job-detail';
 
 export const AppRoutes = () => {
   const { isAuthenticated, user } = useAuth();
@@ -33,6 +34,7 @@ export const AppRoutes = () => {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/job-vacancy" element={<JobVacancyPage />} />
+          <Route path="/jobs/:id" element={<JobDetailPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
