@@ -12,7 +12,7 @@ import JobVacancyPage from '@/features/job-vacancy/job-list';
 import AboutPage from '@/features/about';
 import ContactPage from '@/features/contact';
 import DashboardRecruiterCampany from '@/features/dashboard-recruiter-company';
-import RecruiterJobListPage from '@/features/dashboard-recruiter-jobs/recruiter-job-list';
+import RecruiterJobListPage from '@/features/dashboard-recruiter-jobs/job-list/recruiter-job-list';
 import RecruiterJobDetailsPage from '@/features/dashboard-recruiter-jobs/recruiter-job-details';
 import RecruiterApplicantListPage from '@/features/dashboard-recruiter-jobs/recruiter-applicant-list';
 import JobHunterJobListPage from '@/features/dashboard-jobhunter-jobs/jobhunter-job-list';
