@@ -1,25 +1,24 @@
+// src/components/JobDetail.tsx
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
-const jobList = [
-  {
-    id: 1,
-    jobTitle: 'Frontend Developer',
-    companyName: 'Tech Corp',
-    experienceLevel: 'Intermediate',
-    placementType: 'Remote',
-    skills: 'React, JavaScript, CSS',
-    datePosted: 'Oct 5, 2024',
-    description: `We are looking for a skilled Frontend Developer to join our team. You will be responsible for creating user interfaces using modern web technologies such as React and CSS.`,
-    companyLogo: 'https://via.placeholder.com/50',
-  },
-];
+import { useGetJobById } from '../../hooks/useGetJob';
+import { IJob } from '../../types/job';
 
 const JobDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const job = jobList.find((job) => job.id === parseInt(id || '', 10));
+  const { data, isLoading, error } = useGetJobById(id || '');
+
+  if (isLoading) {
+    return <p>Loading job details...</p>;
+  }
+
+  if (error) {
+    return <p>Error fetching job details: {error.message}</p>;
+  }
+
+  const job: IJob = data?.data;
 
   if (!job) {
     return <p>Job not found!</p>;
@@ -28,14 +27,14 @@ const JobDetail: React.FC = () => {
   return (
     <div className="rounded-lg bg-gray-100 p-6">
       <div className="mb-6 flex items-start">
-        <img src={job.companyLogo} alt="Company Logo" className="mr-6 h-24 w-24" />
+        <img src={job.companyLogo || ''} alt="Company Logo" className="mr-6 h-24 w-24" />
         <div>
-          <h1 className="text-2xl font-semibold">{job.jobTitle}</h1>
+          <h1 className="text-2xl font-semibold">{job.title}</h1>
           <p className="text-gray-600">{job.companyName}</p>
           <p className="text-gray-600">
             {job.experienceLevel} | {job.placementType}
           </p>
-          <p className="text-gray-600">Posted on: {job.datePosted}</p>
+          <p className="text-gray-600">Posted on: {new Date(job.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
 
@@ -46,7 +45,7 @@ const JobDetail: React.FC = () => {
 
       <div className="mb-6">
         <h2 className="mb-2 text-xl font-semibold">Required Skills</h2>
-        <p>{job.skills}</p>
+        <p>{job.requiredSkills.join(', ')}</p>
       </div>
 
       <div className="mt-6 flex justify-end">
