@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
-import JobList from '@/features/job-vacancy/job-list/components/JobList'; // Import the JobList component
+// import JobList from '@/features/job-vacancy/job-list/components/JobList'; // Import the JobList component
 
 // Define a type for the job data
 interface Job {
