@@ -1,4 +1,3 @@
-import React from 'react';
 import SearchJob from './search-job';
 import heroImage from '../../../../assets/home/hero/hero-job-portal.png';
 export default function Hero() {

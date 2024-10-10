@@ -1,6 +1,5 @@
 import Container from '@/components/shared/container';
 import { Button } from '@/components/ui/button';
-import React from 'react';
 
 export default function Banner() {
   return (

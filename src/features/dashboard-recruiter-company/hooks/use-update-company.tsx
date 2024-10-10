@@ -56,7 +56,7 @@ export const useUpdateCompany = (data?: ICompany) => {
 
       toast({
         title: 'Successs!',
-        description: 'Successfully updated company details',
+        description: 'Successfully update company details',
       });
 
       queryClient.invalidateQueries({ queryKey: ['get-user-company'] });
