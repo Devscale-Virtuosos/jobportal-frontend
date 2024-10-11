@@ -12,14 +12,13 @@ import JobVacancyPage from '@/features/job-vacancy/job-list';
 import AboutPage from '@/features/about';
 import ContactPage from '@/features/contact';
 import DashboardRecruiterCampany from '@/features/dashboard-recruiter-company';
-import RecruiterJobListPage from '@/features/dashboard-recruiter-jobs/job-list/components/recruiter-job-list';
-import RecruiterJobDetailsPage from '@/features/dashboard-recruiter-jobs/recruiter-job-details';
+import RecruiterJobListPage from '@/features/dashboard-recruiter-jobs/job-list/recruiter-job-list';
+import RecruiterJobDetailsPage from '@/features/dashboard-recruiter-jobs/job-details/recruiter-job-details';
 import RecruiterApplicantListPage from '@/features/dashboard-recruiter-jobs/applicant-list/components/recruiter-applicant-list';
 import RecruiterApplicantDetailsPage from '@/features/dashboard-recruiter-jobs/applicant-details/components/recruiter-applicant-details';
 import JobHunterJobListPage from '@/features/dashboard-jobhunter-jobs/job-list/component/jobhunter-job-list';
 import JobHunterJobDetailsPage from '@/features/dashboard-jobhunter-jobs/job-detail/component/jobhunter-job-details';
 import RecruiterCreateJobPage from '@/features/dashboard-recruiter-jobs/create-job';
-import RecruiterEditJobPage from '@/features/dashboard-recruiter-jobs/edit-job/components/recruiter-edit-job';
 import NotFoundPage from '@/features/not-found';
 import JobDetailPage from '@/features/job-vacancy/job-detail';
 
@@ -100,15 +99,6 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute isAllowed={isAuthenticated && isRecruiter}>
                 <RecruiterCreateJobPage />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/dashboard/recruiter/edit/jobs/:jobId"
-            element={
-              <ProtectedRoute isAllowed={isAuthenticated && isRecruiter}>
-                <RecruiterEditJobPage />
               </ProtectedRoute>
             }
           />

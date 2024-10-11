@@ -20,9 +20,16 @@ interface ComboBoxProps {
   value?: string;
   placeholder?: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
-export const ComboBox = ({ options, value, placeholder = 'Select option...', onChange }: ComboBoxProps) => {
+export const ComboBox = ({
+  options,
+  value,
+  placeholder = 'Select option...',
+  onChange,
+  disabled = false,
+}: ComboBoxProps) => {
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
 
@@ -39,7 +46,13 @@ export const ComboBox = ({ options, value, placeholder = 'Select option...', onC
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
+          disabled={disabled}
+        >
           {value ? options.find((option) => option.value === value)?.label : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

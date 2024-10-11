@@ -20,15 +20,15 @@ import { ComboBox } from '@/components/ui/combo-box';
 import { EXPERIENCE_LEVEL_LABEL, JOB_TYPE_LABEL, PLACEMENT_TYPE_LABEL } from '@/constants';
 import { useToast } from '@/hooks/use-toast';
 import { useCreateJobForm } from './hooks/useCreateJobForm';
-import { useGenerateJobDescription } from './hooks/useGenerateJobDescription';
-import { JobDescriptionInputSchema, JobFormSchemaType } from './schema/job';
+import { JobDescriptionInputSchema, useGenerateJobDescription } from '../hooks/useGenerateJobDescription';
+import { JobFormSchemaType } from './schema/job';
 import { useCreateJob } from './hooks/useCreateJob';
 
 export default function CreateNewJobPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const { form } = useCreateJobForm();
+  const form = useCreateJobForm();
   const { mutateAsync: generateJobDescription, isPending: isGeneratingJobDescription } = useGenerateJobDescription();
   const { mutateAsync: createJob, isPending: isSubmitting } = useCreateJob();
 

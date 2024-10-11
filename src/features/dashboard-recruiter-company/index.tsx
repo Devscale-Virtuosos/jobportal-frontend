@@ -120,11 +120,7 @@ export default function DashboardRecruiterCampany() {
                   />
                   {isEdit ? (
                     <div className="grid grid-cols-2 gap-2">
-                      <Button
-                        type="button"
-                        className="bg-red-500 hover:bg-red-400"
-                        onClick={() => toggleEditMode(false)}
-                      >
+                      <Button type="button" variant="outline" onClick={() => toggleEditMode(false)}>
                         Cancel
                       </Button>
                       <Button type="submit" className="bg-primary-500 hover:bg-primary-400" disabled={isPending}>

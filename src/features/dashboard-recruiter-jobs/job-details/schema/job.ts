@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
 export const JobFormSchema = z.object({
+  userId: z.string().min(1, 'userId is required.'),
+  companyId: z.string().min(1, 'companyId is required.'),
   title: z.string().min(2, {
     message: 'Title must be at least 2 characters.',
   }),
@@ -20,3 +22,17 @@ export const JobFormSchema = z.object({
 });
 
 export type JobFormSchemaType = z.infer<typeof JobFormSchema>;
+
+export const JobDescriptionInputSchema = z.object({
+  title: z.string().min(2, {
+    message: 'Title is required to generate Job Description.',
+  }),
+  experienceLevel: z.string().min(1, {
+    message: 'Experience level is required to generate Job Description.',
+  }),
+  requiredSkills: z.array(z.string()).min(1, {
+    message: 'Skills are required to generate Job Description.',
+  }),
+});
+
+export type TJobDescriptionInput = z.infer<typeof JobDescriptionInputSchema>;

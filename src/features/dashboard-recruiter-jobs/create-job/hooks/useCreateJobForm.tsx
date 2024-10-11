@@ -18,12 +18,5 @@ export function useCreateJobForm() {
     },
   });
 
-  const onSubmit = (data: JobFormSchemaType) => {
-    console.log(data);
-  };
-
-  return {
-    form,
-    onSubmit,
-  };
+  return form;
 }

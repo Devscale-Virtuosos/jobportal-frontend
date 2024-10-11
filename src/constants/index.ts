@@ -47,7 +47,7 @@ export const JOB_STATUS = {
   CLOSED: 'closed',
 };
 
-export const JOB_STATUS_LEVEL: Record<string, string> = {
+export const JOB_STATUS_LABEL: Record<string, string> = {
   [JOB_STATUS.DRAFT]: 'Draft',
   [JOB_STATUS.PUBLISHED]: 'Published',
   [JOB_STATUS.CLOSED]: 'Closed',
