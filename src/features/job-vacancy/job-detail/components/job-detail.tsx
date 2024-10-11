@@ -1,63 +1,74 @@
-import { Button } from '@/components/ui/button';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
-const jobList = [
-  {
-    id: 1,
-    jobTitle: 'Frontend Developer',
-    companyName: 'Tech Corp',
-    experienceLevel: 'Intermediate',
-    placementType: 'Remote',
-    skills: 'React, JavaScript, CSS',
-    datePosted: 'Oct 5, 2024',
-    description: `We are looking for a skilled Frontend Developer to join our team. You will be responsible for creating user interfaces using modern web technologies such as React and CSS.`,
-    companyLogo: 'https://via.placeholder.com/50',
-  },
-];
+import { Building } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { EditorPreview } from '@/components/shared/editor-preview';
+import { EXPERIENCE_LEVEL_LABEL, JOB_TYPE_LABEL, PLACEMENT_TYPE_LABEL } from '@/constants';
+import { IJob } from '@/types/entity';
+import { useGetJobById } from '../../hooks/useGetJob';
+import { JobDetailSkeleton } from './job-detail-skeleton';
 
 const JobDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const job = jobList.find((job) => job.id === parseInt(id || '', 10));
+  const { data, isLoading, error } = useGetJobById(id || '');
+
+  if (isLoading) {
+    return <JobDetailSkeleton />;
+  }
+
+  if (error) {
+    return <p>Error fetching job details: {error.message}</p>;
+  }
+
+  const job: IJob | undefined = data?.data;
 
   if (!job) {
     return <p>Job not found!</p>;
   }
 
   return (
-    <div className="rounded-lg bg-gray-100 p-6">
-      <div className="mb-6 flex items-start">
-        <img src={job.companyLogo} alt="Company Logo" className="mr-6 h-24 w-24" />
-        <div>
-          <h1 className="text-2xl font-semibold">{job.jobTitle}</h1>
-          <p className="text-gray-600">{job.companyName}</p>
-          <p className="text-gray-600">
-            {job.experienceLevel} | {job.placementType}
+    <Card>
+      <CardHeader className="flex flex-row items-center gap-4">
+        <Avatar className="h-24 w-24">
+          <AvatarImage src={job.companyId.logo} />
+          <AvatarFallback className="bg-zinc-200">
+            <Building size={30} />
+          </AvatarFallback>
+        </Avatar>
+        <section>
+          <CardTitle className="text-3xl">{job.title}</CardTitle>
+          <h4 className="text-zinc-400">
+            {job.companyId.name} &#x2022; {job.location}
+          </h4>
+          <p className="mb-2">
+            {PLACEMENT_TYPE_LABEL[job.placementType]} &#x2022; {JOB_TYPE_LABEL[job.type]} &#x2022;{' '}
+            {EXPERIENCE_LEVEL_LABEL[job.experienceLevel]}
           </p>
-          <p className="text-gray-600">Posted on: {job.datePosted}</p>
-        </div>
-      </div>
-
-      <div className="mb-6">
-        <h2 className="mb-2 text-xl font-semibold">Job Description</h2>
-        <p>{job.description}</p>
-      </div>
-
-      <div className="mb-6">
-        <h2 className="mb-2 text-xl font-semibold">Required Skills</h2>
-        <p>{job.skills}</p>
-      </div>
-
-      <div className="mt-6 flex justify-end">
-        <Button
-          onClick={() => alert('Apply button clicked!')}
-          className="rounded-lg bg-secondary-600 px-6 py-2 font-semibold text-white transition-colors duration-300 hover:bg-secondary-700"
-        >
-          Apply Now
-        </Button>
-      </div>
-    </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {job.requiredSkills.map((skill, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-1 whitespace-nowrap rounded-md bg-zinc-200 px-2 py-1 text-xs"
+              >
+                {skill}
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="flex-auto text-right">
+          <Button type="button" className="bg-primary-500 hover:bg-primary-400">
+            Apply Now
+          </Button>
+        </section>
+      </CardHeader>
+      <CardContent className="mt-4 flex flex-col gap-4">
+        <h4 className="text-xl font-bold">About the job</h4>
+        <EditorPreview value={job.description} />
+      </CardContent>
+    </Card>
   );
 };
 

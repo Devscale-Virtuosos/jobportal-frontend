@@ -1,77 +1,68 @@
+// src/components/JobList.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-const jobList = [
-  {
-    id: 1,
-    jobTitle: 'Frontend Developer',
-    companyName: 'Tech Corp',
-    experienceLevel: 'Intermediate',
-    placementType: 'Remote',
-    skills: 'React, JavaScript, CSS',
-    date: 'Oct 5, 2024',
-    companyLogo: 'https://via.placeholder.com/50',
-  },
-  {
-    id: 2,
-    jobTitle: 'Backend Developer',
-    companyName: 'Dev Solutions',
-    experienceLevel: 'Expert',
-    placementType: 'Onsite',
-    skills: 'Node.js, MongoDB, Express',
-    date: 'Sep 29, 2024',
-    companyLogo: 'https://via.placeholder.com/50',
-  },
-  {
-    id: 3,
-    jobTitle: 'UI/UX Designer',
-    companyName: 'Design Studios',
-    experienceLevel: 'Fresher',
-    placementType: 'Hybrid',
-    skills: 'Figma, Adobe XD, Sketch',
-    date: 'Oct 1, 2024',
-    companyLogo: 'https://via.placeholder.com/50',
-  },
-  {
-    id: 4,
-    jobTitle: 'Full Stack Developer',
-    companyName: 'Innovative Tech',
-    experienceLevel: 'Intermediate',
-    placementType: 'Remote',
-    skills: 'React, Node.js, PostgreSQL',
-    date: 'Sep 30, 2024',
-    companyLogo: 'https://via.placeholder.com/50',
-  },
-  {
-    id: 5,
-    jobTitle: 'Data Scientist',
-    companyName: 'Data Analytics Ltd',
-    experienceLevel: 'Expert',
-    placementType: 'Remote',
-    skills: 'Python, Machine Learning, SQL',
-    date: 'Sep 28, 2024',
-    companyLogo: 'https://via.placeholder.com/50',
-  },
-];
+import { Building } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { EXPERIENCE_LEVEL_LABEL, JOB_TYPE_LABEL, PLACEMENT_TYPE_LABEL } from '@/constants';
+import { IJob } from '@/types/entity';
+import { useGetJobs } from '../../hooks/useGetJob';
+import { JobListSkeleton } from './JobListSkeleton';
 
 export const JobList: React.FC = () => {
+  const { data, isLoading, error } = useGetJobs();
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-4">
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error fetching jobs: {error.message}</div>;
+  }
+
   return (
-    <div>
-      {jobList.map((job) => (
-        <Link key={job.id} to={`/jobs/${job.id}`}>
-          <div className="mb-4 flex cursor-pointer items-center rounded-lg bg-gray-200 p-4 hover:bg-gray-300">
-            <img src={job.companyLogo} alt="Company Logo" className="mr-4 h-16 w-16" />
-            <div className="flex-1">
-              <h3 className="text-xl font-semibold">{job.jobTitle}</h3>
-              <p>{job.companyName}</p>
-              <p>
-                {job.experienceLevel} | {job.placementType}
-              </p>
-              <p>{job.skills}</p>
-            </div>
-            <div className="text-sm text-gray-500">
-              <p>{job.date}</p>
-            </div>
-          </div>
+    <div className="flex flex-col gap-4">
+      {data?.data.map((job: IJob) => (
+        <Link key={job._id} to={`/job-vacancy/${job._id}`}>
+          <Card>
+            <CardContent className="flex gap-4 pt-6">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={job.companyId.logo} />
+                <AvatarFallback className="bg-zinc-200">
+                  <Building size={30} />
+                </AvatarFallback>
+              </Avatar>
+              <section>
+                <CardTitle className="mb-1">{job.title}</CardTitle>
+                <h4 className="text-zinc-400">
+                  {job.companyId.name} &#x2022; {job.location}
+                </h4>
+                <p className="mb-2">
+                  {PLACEMENT_TYPE_LABEL[job.placementType]} &#x2022; {JOB_TYPE_LABEL[job.type]} &#x2022;{' '}
+                  {EXPERIENCE_LEVEL_LABEL[job.experienceLevel]}
+                </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  {job.requiredSkills.map((skill, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-1 whitespace-nowrap rounded-md bg-zinc-200 px-2 py-1 text-xs"
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </section>
+              <section className="flex-auto">
+                <p className="text-right">{new Date(job.createdAt).toLocaleDateString()}</p>
+              </section>
+            </CardContent>
+          </Card>
         </Link>
       ))}
     </div>

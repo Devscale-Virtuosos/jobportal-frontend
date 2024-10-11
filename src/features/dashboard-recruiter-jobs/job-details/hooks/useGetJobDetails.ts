@@ -4,7 +4,7 @@ import { IJob, IResponse } from '@/types';
 
 export const useGetJobDetails = (jobId: string) => {
   const query = useQuery({
-    queryKey: ['get-job-details'],
+    queryKey: ['job', jobId],
     queryFn: createRequest<IResponse<IJob>>(`${process.env.REACT_APP_BASE_URL}/api/v1/jobs/${jobId}`),
   });
 
