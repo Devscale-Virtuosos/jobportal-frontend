@@ -52,3 +52,13 @@ export const JOB_STATUS_LABEL: Record<string, string> = {
   [JOB_STATUS.PUBLISHED]: 'Published',
   [JOB_STATUS.CLOSED]: 'Closed',
 };
+
+export const EDUCATION_LEVEL: Record<string, string> = {
+  D1: 'D1',
+  D2: 'D2',
+  D3: 'D3',
+  S1: 'D4/S1',
+  S2: 'S2',
+  S3: 'S3',
+  Other: 'Other',
+};

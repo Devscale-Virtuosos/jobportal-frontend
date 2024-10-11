@@ -2,16 +2,18 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Building } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EditorPreview } from '@/components/shared/editor-preview';
-import { EXPERIENCE_LEVEL_LABEL, JOB_TYPE_LABEL, PLACEMENT_TYPE_LABEL } from '@/constants';
+import { useAuth } from '@/components/shared/auth-provider';
+import { EXPERIENCE_LEVEL_LABEL, JOB_TYPE_LABEL, PLACEMENT_TYPE_LABEL, ROLE } from '@/constants';
 import { IJob } from '@/types/entity';
 import { useGetJobById } from '../../hooks/useGetJob';
 import { JobDetailSkeleton } from './job-detail-skeleton';
+import { JobApplicationForm } from './job-application-form';
 
 const JobDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
 
   const { data, isLoading, error } = useGetJobById(id || '');
 
@@ -58,11 +60,11 @@ const JobDetail: React.FC = () => {
             ))}
           </div>
         </section>
-        <section className="flex-auto text-right">
-          <Button type="button" className="bg-primary-500 hover:bg-primary-400">
-            Apply Now
-          </Button>
-        </section>
+        {user && user.role === ROLE.JOB_HUNTER && (
+          <section className="flex-auto text-right">
+            <JobApplicationForm jobId={job._id} />
+          </section>
+        )}
       </CardHeader>
       <CardContent className="mt-4 flex flex-col gap-4">
         <h4 className="text-xl font-bold">About the job</h4>
