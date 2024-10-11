@@ -17,3 +17,50 @@ export interface ICompany extends TInputCompany {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IJobSimple {
+  _id: string;
+  userId: string;
+  companyId: string;
+  title: string;
+  description: string;
+  requiredSkills: string[];
+  experienceLevel: 'junior' | 'mid_level' | 'senior';
+  type: 'full_time' | 'part_time' | 'contract' | 'internship';
+  placementType: 'on_site' | 'remote' | 'hybrid';
+  location?: string;
+  status: 'draft' | 'published' | 'closed';
+  deletedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IJob {
+  _id: string;
+  userId: string;
+  companyId: ICompanySimple;
+  title: string;
+  description: string;
+  experienceLevel: 'junior' | 'mid_level' | 'senior';
+  requiredSkills: string[];
+  type: 'full_time' | 'part_time' | 'contract' | 'internship';
+  placementType: 'on_site' | 'remote' | 'hybrid';
+  location: string;
+  status: 'draft' | 'published' | 'closed';
+  deletedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ICompanySimple {
+  _id: string;
+  userId: string;
+  name: string;
+  location: string;
+  industry: string;
+  description: string;
+  logo: string;
+  deletedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}

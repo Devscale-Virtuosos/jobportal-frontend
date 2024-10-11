@@ -21,28 +21,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Job, jobColumns } from './job-column-table';
-
-const data: Job[] = [
-  {
-    id: '1',
-    title: 'Software Engineer',
-    status: 'open',
-    experienceLevel: 'mid',
-  },
-  {
-    id: '2',
-    title: 'Frontend Developer',
-    status: 'closed',
-    experienceLevel: 'junior',
-  },
-  {
-    id: '3',
-    title: 'Backend Developer',
-    status: 'open',
-    experienceLevel: 'senior',
-  },
-];
+import { jobColumns } from './job-column-table';
+import { useGetJobList } from '../hooks/useGetJobList';
 
 export function JobListTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -50,8 +30,10 @@ export function JobListTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const { data: result } = useGetJobList();
+
   const table = useReactTable({
-    data,
+    data: result?.data ?? [],
     columns: jobColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

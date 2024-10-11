@@ -1,15 +1,17 @@
+import { Link } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, Eye, MoreHorizontal, Pencil, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { EXPERIENCE_LEVEL_LABEL, JOB_STATUS_LABEL, JOB_TYPE_LABEL, PLACEMENT_TYPE_LABEL } from '@/constants';
+import { IJob } from '@/types';
 
-export type Job = {
-  id: string;
-  title: string;
-  status: 'open' | 'closed';
-  experienceLevel: 'junior' | 'mid' | 'senior';
-};
-
-export const jobColumns: ColumnDef<Job>[] = [
+export const jobColumns: ColumnDef<IJob>[] = [
   {
     accessorKey: 'title',
     header: ({ column }) => {
@@ -23,14 +25,28 @@ export const jobColumns: ColumnDef<Job>[] = [
     cell: ({ row }) => <div>{row.getValue('title')}</div>,
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
-  },
-  {
     accessorKey: 'experienceLevel',
     header: 'Experience Level',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('experienceLevel')}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">{EXPERIENCE_LEVEL_LABEL[row.getValue('experienceLevel') as string] ?? '-'}</div>
+    ),
+  },
+  {
+    accessorKey: 'type',
+    header: 'Type',
+    cell: ({ row }) => <div className="capitalize">{JOB_TYPE_LABEL[row.getValue('type') as string] ?? '-'}</div>,
+  },
+  {
+    accessorKey: 'placementType',
+    header: 'Placement',
+    cell: ({ row }) => (
+      <div className="capitalize">{PLACEMENT_TYPE_LABEL[row.getValue('placementType') as string] ?? '-'}</div>
+    ),
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => <div className="capitalize">{JOB_STATUS_LABEL[row.getValue('status') as string] ?? '-'}</div>,
   },
   {
     id: 'actions',
@@ -39,30 +55,30 @@ export const jobColumns: ColumnDef<Job>[] = [
     cell: ({ row }) => {
       const job = row.original;
 
-      const handleEdit = () => {
-        console.log('Edit job:', job.id);
-      };
-
-      const handlePublish = () => {
-        console.log('Publish job:', job.id);
-      };
-
-      const handleDelete = () => {
-        console.log('Delete job:', job.id);
-      };
-
       return (
-        <div className="flex space-x-2">
-          <Button variant="outline" size="sm" onClick={handleEdit}>
-            Edit
-          </Button>
-          <Button variant="outline" size="sm" onClick={handlePublish}>
-            Publish
-          </Button>
-          <Button variant="destructive" size="sm" onClick={handleDelete}>
-            Delete
-          </Button>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <MoreHorizontal className="h-4 w-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Link to={`/dashboard/recruiter/jobs/${job._id}`}>
+              <DropdownMenuItem>
+                <Eye className="mr-2 h-4 w-4" />
+                Details
+              </DropdownMenuItem>
+            </Link>
+            <Link to={`/dashboard/recruiter/jobs/${job._id}/applications`}>
+              <DropdownMenuItem>
+                <Users className="mr-2 h-4 w-4" />
+                Applications
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem>
+              <Pencil className="mr-2 h-4 w-4" />
+              Change Status
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },

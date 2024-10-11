@@ -1,24 +1,22 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormSchema, FormSchemaType } from '../schema/createJob';
+import { JobFormSchema, JobFormSchemaType } from '../schema/job';
+import { JOB_STATUS } from '@/constants';
 
 export function useCreateJobForm() {
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<JobFormSchemaType>({
+    resolver: zodResolver(JobFormSchema),
     defaultValues: {
       title: '',
       experienceLevel: '',
-      skills: '',
+      requiredSkills: [],
       description: '',
+      type: '',
+      placementType: '',
+      location: '',
+      status: JOB_STATUS.DRAFT,
     },
   });
 
-  const onSubmit = (data: FormSchemaType) => {
-    console.log(data);
-  };
-
-  return {
-    form,
-    onSubmit,
-  };
+  return form;
 }
