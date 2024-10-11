@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export const useGetJobList = () => {
   const query = useQuery({
-    queryKey: ['job-list'],
+    queryKey: ['jobs'],
     queryFn: createRequest<IResponse<IJob[]>>(`${process.env.REACT_APP_BASE_URL}/api/v1/jobs`),
   });
 
