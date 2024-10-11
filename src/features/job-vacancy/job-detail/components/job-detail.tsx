@@ -1,9 +1,8 @@
-// src/components/JobDetail.tsx
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetJobById } from '../../hooks/useGetJob';
-import { IJob } from '../../types/job';
+import { IJob } from '@/types/entity';
 
 const JobDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,7 +17,7 @@ const JobDetail: React.FC = () => {
     return <p>Error fetching job details: {error.message}</p>;
   }
 
-  const job: IJob = data?.data;
+  const job: IJob | undefined = data?.data;
 
   if (!job) {
     return <p>Job not found!</p>;
@@ -27,14 +26,19 @@ const JobDetail: React.FC = () => {
   return (
     <div className="rounded-lg bg-gray-100 p-6">
       <div className="mb-6 flex items-start">
-        <img src={job.companyLogo || ''} alt="Company Logo" className="mr-6 h-24 w-24" />
+        <img
+          src={job.companyId.logo || 'https://via.placeholder.com/150'}
+          alt="Company Logo"
+          className="mr-6 h-24 w-24"
+        />
+
         <div>
           <h1 className="text-2xl font-semibold">{job.title}</h1>
-          <p className="text-gray-600">{job.companyName}</p>
+          <p className="text-gray-600">{job.companyId.name}</p>
           <p className="text-gray-600">
             {job.experienceLevel} | {job.placementType}
           </p>
-          <p className="text-gray-600">Posted on: {new Date(job.createdAt).toLocaleDateString()}</p>
+          <p>{job.type}</p>
         </div>
       </div>
 
