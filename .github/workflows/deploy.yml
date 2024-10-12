@@ -1,0 +1,52 @@
+name: CI/CD Pipeline Virtuosos Job Portal
+
+# akan dijalankan ketika push ke branch main
+on:
+  push:
+    branches:
+      - main
+
+# hal yang dijalankan
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Logging
+        run: echo "Start deploy to production..."
+      
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        run: |
+          npm install -g pnpm@latest
+          pnpm install
+      
+      - name: Check Code Linter
+        run: pnpm lint
+      
+      - name: Build Docker Image
+        run: docker build -t indraarianggi/virtuosos-jobportal-fe .
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker Image to Hub
+        run: docker push indraarianggi/virtuosos-jobportal-fe
+      
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            docker pull indraarianggi/virtuosos-jobportal-fe
+            docker stop virtuosos-jobportal-fe || true
+            docker rm virtuosos-jobportal-fe || true
+            docker run -d \
+              -e REACT_APP_BASE_URL="${{ secrets.REACT_APP_BASE_URL }}" \
+              --name virtuosos-jobportal-fe -p 4173:4173 indraarianggi/virtuosos-jobportal-fe
