@@ -16,8 +16,8 @@ import RecruiterJobListPage from '@/features/dashboard-recruiter-jobs/job-list/r
 import RecruiterJobDetailsPage from '@/features/dashboard-recruiter-jobs/job-details/recruiter-job-details';
 import RecruiterApplicantListPage from '@/features/dashboard-recruiter-jobs/applicant-list/components/recruiter-applicant-list';
 import RecruiterApplicantDetailsPage from '@/features/dashboard-recruiter-jobs/applicant-details/components/recruiter-applicant-details';
-import JobHunterJobListPage from '@/features/dashboard-jobhunter-jobs/job-list/component/jobhunter-job-list';
-import JobHunterJobDetailsPage from '@/features/dashboard-jobhunter-jobs/job-detail/component/jobhunter-job-details';
+import JobHunterJobListPage from '@/features/dashboard-jobhunter-jobs/job-list/jobhunter-job-list';
+import JobHunterJobDetailsPage from '@/features/dashboard-jobhunter-jobs/job-detail/jobhunter-job-details';
 import RecruiterCreateJobPage from '@/features/dashboard-recruiter-jobs/create-job';
 import NotFoundPage from '@/features/not-found';
 import JobDetailPage from '@/features/job-vacancy/job-detail';
