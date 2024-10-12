@@ -35,7 +35,7 @@ export default function LoginPage() {
           <CardTitle>Login</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/login`} method="POST">
+          <form action={`${process.env.VITE_API_BASE_URL}/api/v1/auth/login`} method="POST">
             <Button type="submit" className="w-full bg-primary-500 hover:bg-primary-400">
               Login with Google
             </Button>

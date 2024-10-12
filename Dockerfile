@@ -12,10 +12,9 @@ RUN pnpm install
 COPY . .
 
 # Accept build arguments
-ARG REACT_APP_BASE_URL
-
-# Write build arguments to .env file
-RUN echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" > .env
+ARG VITE_API_BASE_URL
+# Set environment variables during the build process
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 RUN pnpm build
 

@@ -6,6 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetJobDetail = () => {
   return useQuery<IResponse<IJob[]>>({
     queryKey: ['application'],
-    queryFn: createRequest<IResponse<IJob[]>>(`${process.env.REACT_APP_BASE_URL}/api/v1/applications/:jobId`),
+    queryFn: createRequest<IResponse<IJob[]>>(`${process.env.VITE_API_BASE_URL}/api/v1/applications/:jobId`),
   });
 };

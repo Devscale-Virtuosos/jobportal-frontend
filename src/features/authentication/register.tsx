@@ -39,12 +39,12 @@ export default function RegisterPage() {
           <CardDescription>Choose your role!</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/register/recruiter`} method="POST">
+          <form action={`${process.env.VITE_API_BASE_URL}/api/v1/auth/register/recruiter`} method="POST">
             <Button type="submit" className="w-full bg-primary-500 hover:bg-primary-400">
               Register as Recruiter
             </Button>
           </form>
-          <form action={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/register/job_hunter`} method="POST">
+          <form action={`${process.env.VITE_API_BASE_URL}/api/v1/auth/register/job_hunter`} method="POST">
             <Button type="submit" className="w-full bg-primary-500 hover:bg-primary-400">
               Register as Job Hunter
             </Button>

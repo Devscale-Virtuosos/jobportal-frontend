@@ -22,7 +22,7 @@ export const useGenerateJobDescription = () => {
     mutationKey: ['generate-job-description'],
     mutationFn: async (payload) => {
       const requestFunc = createRequest<IResponse<string>>(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/jobs/generate/description`,
+        `${process.env.VITE_API_BASE_URL}/api/v1/jobs/generate/description`,
         {
           method: 'POST',
           body: JSON.stringify(payload),

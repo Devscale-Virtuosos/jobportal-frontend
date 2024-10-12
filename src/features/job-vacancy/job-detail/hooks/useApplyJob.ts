@@ -8,7 +8,7 @@ export const useApplyJob = (jobId: string) => {
     mutationKey: ['apply-job', jobId],
     mutationFn: async (payload) => {
       const requestFunc = createRequest<IResponse<null>>(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/jobs/${jobId}/apply`,
+        `${process.env.VITE_API_BASE_URL}/api/v1/jobs/${jobId}/apply`,
         {
           method: 'POST',
           body: JSON.stringify(payload),

@@ -7,11 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetApplicationList = () => {
   return useQuery<IResponse<TJobHunterApplication[]>>({
     queryKey: ['application'],
-    queryFn: createRequest<IResponse<TJobHunterApplication[]>>(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/applications`,
-      {
-        credentials: 'include',
-      },
-    ),
+    queryFn: createRequest<IResponse<TJobHunterApplication[]>>(`${process.env.VITE_API_BASE_URL}/api/v1/applications`, {
+      credentials: 'include',
+    }),
   });
 };

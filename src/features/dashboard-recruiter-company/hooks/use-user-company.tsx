@@ -5,7 +5,7 @@ import { ICompany, IResponse } from '@/types';
 export const useGetUserCompany = () => {
   const query = useQuery({
     queryKey: ['get-user-company'],
-    queryFn: createRequest<IResponse<ICompany>>(`${process.env.REACT_APP_BASE_URL}/api/v1/users/company`, {
+    queryFn: createRequest<IResponse<ICompany>>(`${process.env.VITE_API_BASE_URL}/api/v1/users/company`, {
       credentials: 'include',
     }),
   });

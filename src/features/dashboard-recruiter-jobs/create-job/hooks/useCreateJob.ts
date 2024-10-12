@@ -7,7 +7,7 @@ export const useCreateJob = () => {
   const mutation = useMutation<IResponse<IJobSimple>, Error, JobFormSchemaType>({
     mutationKey: ['create-job'],
     mutationFn: async (payload) => {
-      const requestFunc = createRequest<IResponse<IJobSimple>>(`${process.env.REACT_APP_BASE_URL}/api/v1/jobs`, {
+      const requestFunc = createRequest<IResponse<IJobSimple>>(`${process.env.VITE_API_BASE_URL}/api/v1/jobs`, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {

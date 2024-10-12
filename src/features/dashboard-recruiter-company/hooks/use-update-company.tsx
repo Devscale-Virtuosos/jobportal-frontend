@@ -16,7 +16,7 @@ export const useUpdateCompany = (data?: ICompany) => {
     mutationKey: ['update-company'],
     mutationFn: async (payload) => {
       const requestFunc = createRequest<IResponse<ICompany>>(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/companies/${data?._id}`,
+        `${process.env.VITE_API_BASE_URL}/api/v1/companies/${data?._id}`,
         {
           method: 'PUT',
           body: JSON.stringify(payload),

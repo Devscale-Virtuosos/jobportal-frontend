@@ -6,7 +6,7 @@ export const useLogout = () => {
   const { toast } = useToast();
   const mutation = useMutation({
     mutationKey: ['logout'],
-    mutationFn: createRequest(`${process.env.REACT_APP_BASE_URL}/api/v1/auth/logout`, {
+    mutationFn: createRequest(`${process.env.VITE_API_BASE_URL}/api/v1/auth/logout`, {
       method: 'POST',
       credentials: 'include',
     }),
