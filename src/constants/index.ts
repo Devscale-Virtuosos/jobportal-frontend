@@ -53,7 +53,7 @@ export const JOB_STATUS_LABEL: Record<string, string> = {
   [JOB_STATUS.CLOSED]: 'Closed',
 };
 
-export const EDUCATION_LEVEL: Record<string, string> = {
+export const EDUCATION_LABEL: Record<string, string> = {
   D1: 'D1',
   D2: 'D2',
   D3: 'D3',
@@ -61,4 +61,20 @@ export const EDUCATION_LEVEL: Record<string, string> = {
   S2: 'S2',
   S3: 'S3',
   Other: 'Other',
+};
+
+export const APPLICATION_STATUS = {
+  APPLIED: 'applied',
+  REVIEWED: 'reviewed',
+  IN_PROGRESS: 'in_progress',
+  ACCEPTED: 'accepted',
+  REJECTED: 'rejected',
+};
+
+export const APPLICATION_STATUS_LABEL: Record<string, string> = {
+  [APPLICATION_STATUS.APPLIED]: 'Applied',
+  [APPLICATION_STATUS.REVIEWED]: 'Reviewed',
+  [APPLICATION_STATUS.IN_PROGRESS]: 'In Progress',
+  [APPLICATION_STATUS.ACCEPTED]: 'Accepted',
+  [APPLICATION_STATUS.REJECTED]: 'Rejected',
 };

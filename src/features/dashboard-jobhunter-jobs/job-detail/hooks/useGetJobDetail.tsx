@@ -6,10 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetJobDetail = () => {
   return useQuery<IResponse<IJob[]>>({
     queryKey: ['application'],
-    queryFn: async () => {
-      const response = await createRequest<IResponse<IJob[]>>(`${process.env.REACT_APP_BASE_URL}/api/v1/applications/:jobId`);
-      return response.data;
-    },
-    staleTime: 1000 * 60 * 5, // Keep data fresh for 5 minutes
+    queryFn: createRequest<IResponse<IJob[]>>(`${process.env.REACT_APP_BASE_URL}/api/v1/applications/:jobId`),
   });
 };

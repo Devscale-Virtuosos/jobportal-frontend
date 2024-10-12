@@ -1,62 +1,67 @@
 // src/components/job-column-table.tsx
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, Eye, MoreHorizontal, Pencil } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { IJob } from '@/types';
+import { APPLICATION_STATUS_LABEL } from '@/constants';
+import { TJobHunterApplication } from '@/types';
 
-export const jobColumns: ColumnDef<IJob>[] = [
+export const jobColumns: ColumnDef<TJobHunterApplication>[] = [
   {
-    accessorKey: 'company.name',
+    accessorKey: 'jobId.title',
+    header: ({ column }) => (
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        Title
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => {
+      const {
+        jobId: { _id, title },
+      } = row.original;
+      return (
+        <Link to={`/job-vacancy/${_id}`} className="hover:underline">
+          {title}
+        </Link>
+      );
+    },
+  },
+  {
+    accessorKey: 'jobId.companyId',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         Company Name
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue('company.name')}</div>,
+    cell: ({ row }) => {
+      const {
+        jobId: {
+          companyId: { name },
+        },
+      } = row.original;
+      return <div>{name}</div>;
+    },
   },
   {
-    accessorKey: 'company.location',
+    accessorKey: 'jobId.location',
     header: 'Location',
-    cell: ({ row }) => <div>{row.getValue('company.location')}</div>,
+    cell: ({ row }) => {
+      const {
+        jobId: { location },
+      } = row.original;
+      return <div>{location}</div>;
+    },
   },
   {
-    accessorKey: 'appliedDate',
+    accessorKey: 'createdAt',
     header: 'Applied Date',
-    cell: ({ row }) => <div>{new Date(row.getValue('appliedDate')).toLocaleDateString()}</div>,
+    cell: ({ row }) => <div>{new Date(row.getValue('createdAt')).toLocaleDateString()}</div>,
   },
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
-  },
-  {
-    id: 'actions',
-    header: 'Actions',
-    cell: ({ row }) => {
-      const job = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <MoreHorizontal className="h-4 w-4" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <Link to={`/dashboard/job-hunter/jobs/${job._id}`}>
-              <DropdownMenuItem>
-                <Eye className="mr-2 h-4 w-4" />
-                Details
-              </DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem>
-              <Pencil className="mr-2 h-4 w-4" />
-              Change Status
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <div className="capitalize">{APPLICATION_STATUS_LABEL[row.getValue('status') as string]}</div>,
   },
 ];
 
