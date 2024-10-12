@@ -26,7 +26,7 @@ export const DashboardLayout = () => {
                 to="/dashboard"
                 end
                 className={({ isActive }) => {
-                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} hover:bg-secondary-400 w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer`;
+                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer hover:bg-secondary-400`;
                 }}
               >
                 Dashboard
@@ -35,7 +35,7 @@ export const DashboardLayout = () => {
                 to="/dashboard/recruiter/company"
                 end
                 className={({ isActive }) => {
-                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} hover:bg-secondary-400 w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer`;
+                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer hover:bg-secondary-400`;
                 }}
               >
                 Company
@@ -44,7 +44,7 @@ export const DashboardLayout = () => {
                 to="/dashboard/recruiter/jobs"
                 end
                 className={({ isActive }) => {
-                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} hover:bg-secondary-400 w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer`;
+                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer hover:bg-secondary-400`;
                 }}
               >
                 Jobs
@@ -53,19 +53,31 @@ export const DashboardLayout = () => {
           )}
 
           {user?.role === ROLE.JOB_HUNTER && (
-            <NavLink
-              to="/dashboard/job-hunter/jobs"
-              end
-              className={({ isActive }) => {
-                return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} hover:bg-secondary-400 w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer`;
-              }}
-            >
-              Applied Jobs
-            </NavLink>
+            <>
+              {' '}
+              <NavLink
+                to="/dashboard/job-hunter/jobs"
+                end
+                className={({ isActive }) => {
+                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer hover:bg-secondary-400`;
+                }}
+              >
+                Applied Jobs
+              </NavLink>
+              <NavLink
+                to="/dashboard/job-hunter/profile"
+                end
+                className={({ isActive }) => {
+                  return `${isActive ? 'bg-secondary-500' : 'bg-transparent'} w-full rounded-md px-4 py-2 text-sm font-medium hover:cursor-pointer hover:bg-secondary-400`;
+                }}
+              >
+                Profile
+              </NavLink>
+            </>
           )}
         </NavigationMenuList>
 
-        <Button onClick={handleLogout} className="bg-primary-500 hover:bg-primary-400 w-full" disabled={isPending}>
+        <Button onClick={handleLogout} className="w-full bg-primary-500 hover:bg-primary-400" disabled={isPending}>
           Log Out
         </Button>
       </NavigationMenu>

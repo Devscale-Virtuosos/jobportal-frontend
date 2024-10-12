@@ -22,6 +22,8 @@ import RecruiterCreateJobPage from '@/features/dashboard-recruiter-jobs/create-j
 import NotFoundPage from '@/features/not-found';
 import JobDetailPage from '@/features/job-vacancy/job-detail';
 
+import JobHunterProfilePage from '@/features/dashboard-jobhunter-jobs/profile';
+
 export const AppRoutes = () => {
   const { isAuthenticated, user } = useAuth();
 
@@ -117,6 +119,14 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute isAllowed={isAuthenticated && isJobHunter}>
                 <JobHunterJobDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/job-hunter/profile"
+            element={
+              <ProtectedRoute isAllowed={isAuthenticated && isJobHunter}>
+                <JobHunterProfilePage />
               </ProtectedRoute>
             }
           />
