@@ -48,5 +48,5 @@ jobs:
             docker stop virtuosos-jobportal-fe || true
             docker rm virtuosos-jobportal-fe || true
             docker run -d \
-              -e REACT_APP_BASE_URL="${{ secrets.REACT_APP_BASE_URL }}" \
+              -e REACT_APP_BASE_URL="${{ env.REACT_APP_BASE_URL }}" \
               --name virtuosos-jobportal-fe -p 4173:4173 indraarianggi/virtuosos-jobportal-fe

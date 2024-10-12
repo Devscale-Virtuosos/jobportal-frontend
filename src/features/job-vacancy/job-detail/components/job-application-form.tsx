@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { ComboBox } from '@/components/ui/combo-box';
-import { EDUCATION_LEVEL } from '@/constants';
+import { EDUCATION_LABEL } from '@/constants';
 import { useToast } from '@/hooks/use-toast';
 import { JobApplicationType } from '../schema';
 import useJobApplicationForm from '../hooks/useJobApplicationForm';
@@ -176,7 +176,7 @@ export const JobApplicationForm = ({ jobId }: JobApplicationFormProp) => {
                     <FormControl>
                       <ComboBox
                         placeholder="Select your last education"
-                        options={Object.entries(EDUCATION_LEVEL).map(([value, label]) => ({ value, label }))}
+                        options={Object.entries(EDUCATION_LABEL).map(([value, label]) => ({ value, label }))}
                         {...field}
                       />
                     </FormControl>

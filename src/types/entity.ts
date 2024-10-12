@@ -18,6 +18,30 @@ export interface ICompany extends TInputCompany {
   updatedAt: string;
 }
 
+export interface ICompanySimple {
+  _id: string;
+  userId: string;
+  name: string;
+  location: string;
+  industry: string;
+  description: string;
+  logo: string;
+  deletedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  picture: string;
+  role: string;
+  deletedAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IJobSimple {
   _id: string;
   userId: string;
@@ -52,15 +76,27 @@ export interface IJob {
   updatedAt: string;
 }
 
-export interface ICompanySimple {
+export interface IResume {
   _id: string;
   userId: string;
-  name: string;
-  location: string;
-  industry: string;
-  description: string;
-  logo: string;
-  deletedAt: string | null;
+  resumeText: string;
+  skills: string[];
+  yearOfExperience: number;
+  education: string;
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IApplication {
+  _id: string;
+  userId: IUser;
+  jobId: IJob;
+  resumeId: IResume;
+  status: string;
+  relevancyScore: number;
+  deletedAt: null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type TJobHunterApplication = Omit<IApplication, 'relevancyScore'>;
