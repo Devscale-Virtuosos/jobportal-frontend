@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import imgAbout from '../../../../assets/about/about.png';
 import { Link } from 'react-router-dom';

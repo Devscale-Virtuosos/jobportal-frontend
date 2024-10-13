@@ -2,22 +2,22 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { APPLICATION_STATUS_LABEL } from '@/constants';
+import { JOB_STATUS_LABEL } from '@/constants';
 import { ComboBox } from '@/components/ui/combo-box';
 import { DialogHeader, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { ApplicationStatusType } from '../schema';
+import { JobStatusType } from '../schema';
 
 interface Props {
-  form: UseFormReturn<ApplicationStatusType>;
+  form: UseFormReturn<JobStatusType>;
   isLoading: boolean;
-  onSubmit: (value: ApplicationStatusType) => void;
+  onSubmit: (value: JobStatusType) => void;
   openRef: React.RefObject<HTMLButtonElement>;
   closeRef: React.RefObject<HTMLButtonElement>;
 }
-export const UpdateApplicationForm = ({ form, isLoading, onSubmit, openRef, closeRef }: Props) => {
+export const UpdateJobStatusForm = ({ form, isLoading, onSubmit, openRef, closeRef }: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,13 +27,13 @@ export const UpdateApplicationForm = ({ form, isLoading, onSubmit, openRef, clos
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Update Application Status</DialogTitle>
+          <DialogTitle>Update Job Status</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
             <FormField
               control={form.control}
-              name="applicationId"
+              name="jobId"
               render={({ field }) => (
                 <FormItem className="hidden grid-cols-4 items-center gap-4">
                   <FormLabel className="text-right">Application ID</FormLabel>
@@ -55,8 +55,8 @@ export const UpdateApplicationForm = ({ form, isLoading, onSubmit, openRef, clos
                   <section className="col-span-3">
                     <FormControl>
                       <ComboBox
-                        placeholder="Select new application status"
-                        options={Object.entries(APPLICATION_STATUS_LABEL).map(([value, label]) => ({
+                        placeholder="Select new job status"
+                        options={Object.entries(JOB_STATUS_LABEL).map(([value, label]) => ({
                           value,
                           label,
                         }))}
