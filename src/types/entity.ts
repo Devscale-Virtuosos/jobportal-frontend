@@ -100,3 +100,15 @@ export interface IApplication {
 }
 
 export type TJobHunterApplication = Omit<IApplication, 'relevancyScore'>;
+
+export interface IApplicationSimple {
+  _id: string;
+  userId: string;
+  jobId: string;
+  resumeId: string;
+  status: string;
+  relevancyScore: number;
+  deletedAt: null;
+  createdAt: string;
+  updatedAt: string;
+}

@@ -14,8 +14,7 @@ import ContactPage from '@/features/contact';
 import DashboardRecruiterCampany from '@/features/dashboard-recruiter-company';
 import RecruiterJobListPage from '@/features/dashboard-recruiter-jobs/job-list/recruiter-job-list';
 import RecruiterJobDetailsPage from '@/features/dashboard-recruiter-jobs/job-details/recruiter-job-details';
-import RecruiterApplicantListPage from '@/features/dashboard-recruiter-jobs/applicant-list/components/recruiter-applicant-list';
-import RecruiterApplicantDetailsPage from '@/features/dashboard-recruiter-jobs/applicant-details/components/recruiter-applicant-details';
+import RecruiterApplicantListPage from '@/features/dashboard-recruiter-jobs/applicant-list/recruiter-applicant-list';
 import JobHunterJobListPage from '@/features/dashboard-jobhunter-jobs/job-list/jobhunter-job-list';
 import JobHunterJobDetailsPage from '@/features/dashboard-jobhunter-jobs/job-detail/jobhunter-job-details';
 import RecruiterCreateJobPage from '@/features/dashboard-recruiter-jobs/create-job';
@@ -79,18 +78,10 @@ export const AppRoutes = () => {
             }
           />
           <Route
-            path="/dashboard/recruiter/jobs/:jobId/applicants"
+            path="/dashboard/recruiter/jobs/:jobId/applications"
             element={
               <ProtectedRoute isAllowed={isAuthenticated && isRecruiter}>
                 <RecruiterApplicantListPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard/recruiter/jobs/:jobId/applicants/:applicantId"
-            element={
-              <ProtectedRoute isAllowed={isAuthenticated && isRecruiter}>
-                <RecruiterApplicantDetailsPage />
               </ProtectedRoute>
             }
           />
