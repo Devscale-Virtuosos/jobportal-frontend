@@ -3,12 +3,15 @@ import { IApplication, IResponse } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGetApplicantList = (jobId: string) => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['applications', jobId],
-    queryFn: () =>
-      createRequest<IResponse<IApplication[]>>(
-        `${process.env.VITE_APP_BASE_URL}/api/v1/applications/:jobId`
-      ),
-    enabled: !!jobId, // Only run query if jobId is available
+    queryFn: createRequest<IResponse<IApplication[]>>(
+      `${process.env.VITE_API_BASE_URL}/api/v1/jobs/${jobId}/applications`,
+      {
+        credentials: 'include',
+      },
+    ),
   });
+
+  return query;
 };

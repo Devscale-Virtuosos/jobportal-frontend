@@ -1,30 +1,68 @@
-import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, flexRender } from '@tanstack/react-table';
-import { applicantColumns } from './applicant-column-table';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Loader2 } from 'lucide-react';
-import ApplicantListHeader from './applicant-list-header';
-import { useGetApplicantList } from '../hooks/useGetApplicantList'; 
+import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  flexRender,
+} from '@tanstack/react-table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useToast } from '@/hooks/use-toast';
+import { useGetApplicantList } from '../hooks/useGetApplicantList';
+import useApplicationStatusForm from '../hooks/useApplicantStatusForm';
+import { ApplicationStatusType } from '../schema';
+import { useUpdateApplicationStatus } from '../hooks/useUpdateApplicationStatus';
+import { useApplicantColumn } from './applicant-column-table';
+import { UpdateApplicationForm } from './update-application-form';
 
 export default function RecruiterApplicantListPage() {
-  const { jobId } = useParams<{ jobId: string }>(); 
+  const { jobId } = useParams<{ jobId: string }>();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
+  const { mutateAsync: updateApplicationStatus, isPending: isUpdating } = useUpdateApplicationStatus();
+  const form = useApplicationStatusForm();
 
-  const { data, isLoading, error } = useGetApplicantList(jobId || ''); 
+  const dialogOpenRef = React.useRef<HTMLButtonElement>(null);
+  const dialogCloseRef = React.useRef<HTMLButtonElement>(null);
+  const handleClickChangeStatus = (applicationId: string, status: string) => {
+    form.reset({ applicationId, status });
+    dialogOpenRef.current?.click();
+  };
 
-  const applicants = data?.data?.map((applicant) => ({
-    id: applicant._id, 
-    name: applicant.user.name, 
-    title: applicant.jobDetail.title, 
-    jobType: applicant.jobDetail.description, 
-    experienceLevel: applicant.jobDetail.experienceLevel, 
-    relevancyScore: applicant.relevancyScore,
-    status: applicant.status,
-    resume: applicant.resumeId, 
-  })) || [];
+  const handleSubmitUpdateStatus = async (formValue: ApplicationStatusType) => {
+    try {
+      console.log({ formValue });
+
+      await updateApplicationStatus(formValue);
+
+      toast({
+        title: 'Success!',
+        description: 'Successfully update application status',
+      });
+
+      form.reset();
+
+      dialogCloseRef.current?.click();
+      queryClient.invalidateQueries({ queryKey: ['applications', jobId] });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast({
+        title: 'Failed!',
+        description: `Failed to update application status! ${error?.message}`,
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const { applicantColumns } = useApplicantColumn(handleClickChangeStatus);
+
+  const { data: result } = useGetApplicantList(jobId || '');
 
   const table = useReactTable({
-    data: applicants, 
+    data: result?.data ?? [],
     columns: applicantColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -32,26 +70,16 @@ export default function RecruiterApplicantListPage() {
   });
 
   return (
-    <div className="mx-auto flex h-screen flex-col gap-4 overflow-scroll pb-12">
-      <ApplicantListHeader />
-      {isLoading ? (
-        <div className="flex items-center justify-center py-4">
-          <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-          Loading applicants...
-        </div>
-      ) : error ? (
-        <div className="text-red-500">Error loading applicants.</div>
-      ) : (
-        <div className="rounded-md border">
+    <>
+      <div className="w-full">
+        <div className="mt-4 rounded-md border">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -62,9 +90,7 @@ export default function RecruiterApplicantListPage() {
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
+                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                     ))}
                   </TableRow>
                 ))
@@ -78,7 +104,16 @@ export default function RecruiterApplicantListPage() {
             </TableBody>
           </Table>
         </div>
-      )}
-    </div>
+      </div>
+
+      {/* Dialog Change Applicant Status */}
+      <UpdateApplicationForm
+        form={form}
+        onSubmit={handleSubmitUpdateStatus}
+        isLoading={isUpdating}
+        openRef={dialogOpenRef}
+        closeRef={dialogCloseRef}
+      />
+    </>
   );
 }
