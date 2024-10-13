@@ -62,7 +62,7 @@ export function JobListTable() {
       form.reset();
 
       dialogCloseRef.current?.click();
-      queryClient.invalidateQueries({ queryKey: ['jobs'] });
+      queryClient.invalidateQueries({ queryKey: ['recruiter-jobs'] });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({
