@@ -19,7 +19,7 @@ export default function Vacancy() {
             <Link className="rounded-lg bg-secondary-500 px-4 py-2 text-white" to="/job-vacancy">
               Search Job
             </Link>
-            <Link className="underline" to="/job-vacancy">
+            <Link className="underline" to="/about">
               Learn More
             </Link>
           </div>

@@ -1,5 +1,6 @@
 import Container from '@/components/shared/container';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 export default function Banner() {
   return (
@@ -10,9 +11,13 @@ export default function Banner() {
           Job Seeker, Searching for job Vacancies?
         </h1>
         <p className="mt-4 leading-relaxed text-gray-300">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, officiis.
+          Our platform is built to connect recruiters with qualified candidates and job seekers with the best
+          opportunities. Discover how easy it is to start your hiring or job search journey today, with powerful tools
+          and resources at your fingertips.
         </p>
-        <Button className="mt-4 bg-secondary-500 hover:bg-secondary-400">Start your journey here!</Button>
+        <Link to="/job-vacancy">
+          <Button className="mt-4 bg-secondary-500 hover:bg-secondary-400">Start your journey here!</Button>
+        </Link>
       </div>
     </Container>
   );

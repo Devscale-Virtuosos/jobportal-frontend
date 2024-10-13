@@ -12,17 +12,15 @@ const Footer: React.FC = () => {
               <span role="img" aria-label="job">
                 💼
               </span>{' '}
-              Job
+              Seek Your Job
             </h2>
-            <p>Lorem ipsum</p>
+            <p></p>
           </div>
           <div>
             <h2 className="mb-2 text-lg font-bold">Company</h2>
             <ul className="space-y-1">
               <li>
                 <Link to="/about" className="hover:underline">
-                  {' '}
-                  {/* Ganti <a> dengan <Link> */}
                   About Us
                 </Link>
               </li>
